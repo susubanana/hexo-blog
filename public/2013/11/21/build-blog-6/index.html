@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用hexo搭建博客--博文技巧 | no forget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title" content="用hexo搭建博客--博文技巧">
+<meta name="og:url" content="http://susubanana.github.io/2013/11/21/build-blog-6/">
+<meta name="og:image">
+<meta name="og:site_name" content="no forget">
+<meta name="og:description" content="做了那么多准备工作，实在很急啊，很想写几篇博文过过瘾，验收一下辛苦建站的成果。
+创建博文
+在hexo文件夹下，敲入hexo n 博文名称或hexo new 博文名称，找到\hexo\source\_posts文件夹，接着用markdown语法写博文
+1
+hexo n my-first-blog
+
+
+显示摘要
+在博文合适位置，使用&lt;!--more--&gt;就可将文章分割。
+
+
+实时预览
+老是">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="no forget" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">no forget</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://susubanana.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-build-blog-6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/11/21/build-blog-6/" class="article-date">
+  <time datetime="2013-11-21T11:25:26.000Z" itemprop="datePublished">Nov 21 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用hexo搭建博客--博文技巧
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>做了那么多准备工作，实在很急啊，很想写几篇博文过过瘾，验收一下辛苦建站的成果。</p>
+<h2 id="创建博文">创建博文</h2>
+<p>在hexo文件夹下，敲入<code>hexo n 博文名称</code>或<code>hexo new 博文名称</code>，找到<code>\hexo\source\_posts文件夹</code>，接着用markdown语法写博文</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre>hexo n <span class="keyword">my</span>-<span class="keyword">first</span>-blog
+</pre></td></tr></table></figure>
+
+<h2 id="显示摘要">显示摘要</h2>
+<p>在博文合适位置，使用<code>&lt;!--more--&gt;</code>就可将文章分割。</p>
+<a id="more"></a>
+
+<h2 id="实时预览">实时预览</h2>
+<p>老是F5，或者点击浏览器刷新也挺烦的，hexo作者编写了<a href="https://github.com/hexojs/hexo-livereload" target="_blank">hexo-livereload</a>，安装如下：</p>
+<ul>
+<li>安装 hexo-liveReload，<code>npm install -g hexo-livereload</code>。</li>
+<li>還要搭配浏览器插件才能正常运作。由於我所使用的是google chrome，因此得安裝這個google chrome extension：<a href="https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei/related" target="_blank">LiveReload Extension</a>。</li>
+<li>敲入<code>hexo s</code>会启动实时监听</li>
+</ul>
+<blockquote>
+<p>livereload不仅仅跨平台，而且是开源的，提供自动编译Less、Stylus或集成Sublime Text等编辑器的插件。</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://susubanana.github.io/2013/11/21/build-blog-6/" data-id="81hquku7bm42dqph" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/12/04/web-base-0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          web基础--web工作原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/11/21/build-blog-5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">用hexo搭建博客--markdown语法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript探秘/">javascript探秘</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web基础/">web基础</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hexo/" style="font-size: 20.00px;">hexo</a><a href="/tags/javascript探秘/" style="font-size: 13.33px;">javascript探秘</a><a href="/tags/markdown/" style="font-size: 10.00px;">markdown</a><a href="/tags/web基础/" style="font-size: 16.67px;">web基础</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12">December 2013</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11">November 2013</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2013/12/11/secrets-of-javascript-2/">javascript作用域--闭包</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/10/secrets-of-javascript-1/">javascript作用域--减少全局变量污染</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/10/secrets-of-javascript-0/">javascript作用域--执行环境</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/07/web-base-3/">web基础--cookie和session</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/06/web-base-2/">web基础--浏览器缓存</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 susubanana<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>

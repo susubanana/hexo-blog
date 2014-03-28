@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用hexo搭建博客--部署到github上 | no forget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="og:type" content="blog">
+<meta name="og:title" content="用hexo搭建博客--部署到github上">
+<meta name="og:url" content="http://susubanana.github.io/2013/11/19/build-blog-2/">
+<meta name="og:image" content="/images/cont/create-repository.jpg">
+<meta name="og:site_name" content="no forget">
+<meta name="og:description" content="本文记录如何将博客部署到github上。
+安装Git
+下载安装msysgit，安装完成，右键菜单查看Git Bash选项，没有进入开始菜单查看Git Bash。
+配置SSH Keys
+新用户使用Git，需要配置SSH keys，参考官方教程。
+安装细节提示：
+
+安装完Git，还需要安装github，在SSH Keys本页面下载安装。
+安装Git会在C:\Users\用户名下生成一个.ssh文件夹，">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternative" href="/atom.xml" title="no forget" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">no forget</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><input type="submit" value="&#xF002;" class="search-form-submit"><input type="hidden" name="q" value="site:http://susubanana.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-build-blog-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/11/19/build-blog-2/" class="article-date">
+  <time datetime="2013-11-19T09:59:38.000Z" itemprop="datePublished">Nov 19 2013</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用hexo搭建博客--部署到github上
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文记录如何将博客部署到github上。</p>
+<h2 id="安装Git">安装Git</h2>
+<p>下载安装<a href="https://code.google.com/p/msysgit/downloads/list" target="_blank">msysgit</a>，安装完成，右键菜单查看Git Bash选项，没有进入开始菜单查看Git Bash。</p>
+<h2 id="配置SSH_Keys">配置SSH Keys</h2>
+<p>新用户使用Git，需要配置SSH keys，参考<a href="https://help.github.com/articles/generating-ssh-keys" target="_blank">官方教程</a>。</p>
+<p>安装细节提示：<br><a id="more"></a></p>
+<ul>
+<li>安装完Git，还需要安装github，在<a href="https://help.github.com/articles/generating-ssh-keys" target="_blank">SSH Keys</a>本页面下载安装。</li>
+<li>安装Git会在<code>C:\Users\用户名下</code>生成一个.ssh文件夹，因为Git Bash切换盘符（C盘/D盘等）不方便，所以最好就是的项目、Git、.ssh文件夹都存放在同一个盘符，如：D盘等，将.ssh复制到Git文件夹下。</li>
+<li>在SSH Keys配置的第二个步骤输入命令后，一路回车即可。</li>
+</ul>
+<h2 id="配置Git_Bash的默认路径">配置Git Bash的默认路径</h2>
+<p>找到<code>Git的安装路径\Git\etc文件夹</code>，找到profile文件，将下面代码：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="constant">HOME</span>=<span class="string">"$(cd "</span><span class="variable">$HOME</span><span class="string">" ; pwd)"</span>
+</pre></td></tr></table></figure>
+
+<p>改成：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>HOME=<span class="string">"想要设置的Git Bash初始路径"</span>
+HOME=<span class="string">"<span class="variable">$(cd "$HOME" ; pwd)</span>"</span>
+<span class="built_in">cd</span>
+</pre></td></tr></table></figure>
+
+<h2 id="注册Github账号">注册Github账号</h2>
+<p>前往<a href="https://github.com/" target="_blank">github</a>网站注册github账号。</p>
+<h2 id="创建repository">创建repository</h2>
+<p>登录github后，将鼠标点击github右上角“+”号，在下拉菜单上，选择“New repository”项，将跳到如下页面，填写库名称，勾选“Initialize this repository with a README”，点击“create repository”，即可完成创建库。</p>
+<p><img title="创建库" src="/images/cont/create-repository.jpg" style="display:block;" /></p>
+<p>创建完后不要关闭，一会就会用到。</p>
+<h2 id="部署hexo博客">部署hexo博客</h2>
+<p>找到hexo\ _config.yml文件，修改如下代码</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>deploy:
+  <span class="class"><span class="keyword">type</span></span>
+</pre></td></tr></table></figure>
+
+<p>改成：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre>deploy:
+  <span class="class"><span class="keyword">type</span>: <span class="title">github</span></span>
+  repository: https:<span class="comment">//github.com/susubanana/dancing-waves.git</span>
+  branch: master
+</pre></td></tr></table></figure>
+
+<p>其中repository的路径为刚刚创建完repository的库页面，右侧栏有个HTTPS clone URL，复制里面的地址作为repository的路径。<br><strong>注：</strong> 这里代码的缩进和冒号后必须要有一个空格，否则报错。</p>
+<p>打开Git Bash，通过指令<code>cd 文件路径到达hexo文件夹下</code>，执行下列指令完成部署。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>hexo g
+hexo d
+</pre></td></tr></table></figure>
+
+<p>到github上查看项目是否部署上去。</p>
+<p><strong>注：</strong> 在<code>hexo d</code>之后出现<code>fatal: &#39;github&#39; does not appear to be a git repository</code>报错，敲入如下指令：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre>rm -rf <span class="preprocessor">.deploy</span>
+hexo setup_deploy
+hexo d
+</pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://susubanana.github.io/2013/11/19/build-blog-2/" data-id="e5e69py4p3qefo1x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2013/11/19/build-blog-3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          用hexo搭建博客--博客站点的配置
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2013/11/18/build-blog-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">用hexo搭建博客--博客初成</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/javascript探秘/">javascript探秘</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/">markdown</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web基础/">web基础</a><span class="tag-list-count">4</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hexo/" style="font-size: 20.00px;">hexo</a><a href="/tags/javascript探秘/" style="font-size: 13.33px;">javascript探秘</a><a href="/tags/markdown/" style="font-size: 10.00px;">markdown</a><a href="/tags/web基础/" style="font-size: 16.67px;">web基础</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/12">December 2013</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/11">November 2013</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2013/12/11/secrets-of-javascript-2/">javascript作用域--闭包</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/10/secrets-of-javascript-1/">javascript作用域--减少全局变量污染</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/10/secrets-of-javascript-0/">javascript作用域--执行环境</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/07/web-base-3/">web基础--cookie和session</a>
+          </li>
+        
+          <li>
+            <a href="/2013/12/06/web-base-2/">web基础--浏览器缓存</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2014 susubanana<br>
+      Powered by <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script type="text/javascript" src="/js/script.js"></script>
+  </div>
+</body>
+</html>
