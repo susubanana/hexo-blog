@@ -2,7 +2,5 @@
   "name": "hexo-site",
   "version": "2.5.2",
   "private": true,
-  "dependencies": {
-    "hexo-livereload": "0.0.1"
-  }
+  "dependencies": {}
 }
