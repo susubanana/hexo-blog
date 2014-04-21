@@ -6,8 +6,7 @@
   <title>web基础--cookie和session | no forget</title>
   <meta name="author" content="susubanana">
   
-  <meta name="description" content="本文记录cookie和session。
-因为HTTP协议是无状态的，所以用户的每一次请求都是无状态的，我们不知道在整个Web操作过程中哪些连接与该用户有关，如何解决这个问题？Web经典的解决方案是cookie和session，cookie是一种客户端机制，把用户数据保存在客户端，而session是一种服务器端的机制。
+  <meta name="description" content="因为HTTP协议是无状态的，所以用户的每一次请求都是无状态的，我们不知道在整个Web操作过程中哪些连接与该用户有关，如何解决这个问题？Web经典的解决方案是cookie和session，cookie是一种客户端机制，把用户数据保存在客户端，而session是一种服务器端的机制。
 Cookie
 Cookie是由浏览器维持的，在本地计算机保存一些用户操作的历史信息（当然包括登录信息），并在用户再次访问该站点时浏览器通过HTTP协议将本地cookie内容发送给服务器，从而完成验证，或继续上一步操作。">
   
@@ -81,8 +80,7 @@ Cookie是由浏览器维持的，在本地计算机保存一些用户操作的�
     </header>
     <div class="entry">
       
-        <p>本文记录cookie和session。</p>
-<p>因为HTTP协议是无状态的，所以用户的每一次请求都是无状态的，我们不知道在整个Web操作过程中哪些连接与该用户有关，如何解决这个问题？Web经典的解决方案是cookie和session，cookie是一种客户端机制，把用户数据保存在客户端，而session是一种服务器端的机制。</p>
+        <p>因为HTTP协议是无状态的，所以用户的每一次请求都是无状态的，我们不知道在整个Web操作过程中哪些连接与该用户有关，如何解决这个问题？Web经典的解决方案是cookie和session，cookie是一种客户端机制，把用户数据保存在客户端，而session是一种服务器端的机制。</p>
 <h2 id="Cookie">Cookie</h2>
 <p>Cookie是由浏览器维持的，在本地计算机保存一些用户操作的历史信息（当然包括登录信息），并在用户再次访问该站点时浏览器通过HTTP协议将本地cookie内容发送给服务器，从而完成验证，或继续上一步操作。<br><a id="more"></a><br><img src="/images/cont/web-base-3.jpg" style="display:block;" /></p>
 <p>cookie是有时间限制的，根据生命期不同分成两种：会话cookie和持久cookie；</p>
@@ -96,8 +94,17 @@ Cookie是由浏览器维持的，在本地计算机保存一些用户操作的�
 <p><img src="/images/cont/web-base-31.jpg" style="display:block;" /></p>
 <p>总的来说，session通过cookie，在客户端保存sessionID，而将用户的其他会话消息保存在服务端的session对象中。而cookie需要将所有信息都保存在客户端。</p>
 
+        <div class="paging">
+    
+    <span>上一篇：<a href="/2013/12/10/secrets-of-javascript-0/" class="prev" title="javascript作用域--执行环境">javascript作用域--执行环境</a></span>
+    
+    
+    <span>下一篇：<a href="/2013/12/06/web-base-2/" class="next" title="web基础--浏览器缓存">web基础--浏览器缓存</a></span>
+    
+</div>
       
     </div>
+
     <footer>
       
         
@@ -178,7 +185,7 @@ Cookie是由浏览器维持的，在本地计算机保存一些用户操作的�
   
     <li><a href="/tags/hexo/">hexo</a><small>6</small></li>
   
-    <li><a href="/tags/javascript探秘/">javascript探秘</a><small>3</small></li>
+    <li><a href="/tags/javascript探秘/">javascript探秘</a><small>5</small></li>
   
     <li><a href="/tags/markdown/">markdown</a><small>1</small></li>
   
@@ -192,6 +199,14 @@ Cookie是由浏览器维持的，在本地计算机保存一些用户操作的�
 <div class="widget tag">
   <h3 class="title">Recent Posts</h3>
   <ul class="entry">
+    
+      <li>
+        <a href="/2013/12/17/object-0/">javascript面向对象--私有属性和方法</a>
+      </li>
+    
+      <li>
+        <a href="/2013/12/11/secrets-of-javascript-3/">javascript函数--高阶函数</a>
+      </li>
     
       <li>
         <a href="/2013/12/11/secrets-of-javascript-2/">javascript作用域--闭包</a>
@@ -223,14 +238,6 @@ Cookie是由浏览器维持的，在本地计算机保存一些用户操作的�
     
       <li>
         <a href="/2013/11/21/build-blog-6/">用hexo搭建博客--博文技巧</a>
-      </li>
-    
-      <li>
-        <a href="/2013/11/21/build-blog-5/">用hexo搭建博客--markdown语法</a>
-      </li>
-    
-      <li>
-        <a href="/2013/11/19/build-blog-4/">用hexo搭建博客--博客主题的配置</a>
       </li>
     
   </ul>

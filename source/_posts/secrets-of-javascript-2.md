@@ -3,13 +3,8 @@ date: 2013-12-11 18:30:27
 tags: [javascript探秘]
 ---
 
-本文记录闭包的理解、使用。
-
 闭包的理解
 ----------------------
-HOME="d:/node/no-forget/hexo"
-HOME="$(cd "$HOME" ; pwd)"
-cd
 
 根据下面代码进行分析：
 
