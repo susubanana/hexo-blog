@@ -3,8 +3,6 @@ date: 2013-12-07 21:13:30
 tags: [web基础]
 ---
 
-本文记录cookie和session。
-
 因为HTTP协议是无状态的，所以用户的每一次请求都是无状态的，我们不知道在整个Web操作过程中哪些连接与该用户有关，如何解决这个问题？Web经典的解决方案是cookie和session，cookie是一种客户端机制，把用户数据保存在客户端，而session是一种服务器端的机制。
 
 Cookie
