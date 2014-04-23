@@ -84,3 +84,4 @@ var vBird = Bird.getVBird.bind(bird);
 console.log(vBird()); //60
 ```
 
+被绑定的函数和普通函数相比，需要更多的内存，也因为多重函数调用会稍慢，所以最好在必要时使用。
