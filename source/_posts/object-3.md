@@ -277,7 +277,62 @@ var Bird = {
 var bird = {
     vBird : 60
 };
-console.log(Bird.getVBird.call(bird)); //60
+console.log(Bird.getVBird.call(bird)); //60，bird借用Bird中的getVBird方法
+```
+
+在借用的方法中this指向的对象取决于调用表达式，应该预先将其绑定到特定对象。在客户端编程中有大量的事件和回调，所以这些场景发生很多：
+
+this将指向全局变量
+
+```sh
+//给变量赋值时，this将指向全局变量
+var Bird = {
+    vBird : 45,
+    colors: ['blue', 'yellow'],
+    getVBird :function(whichBird){
+        return whichBird + '的速度是 ' + this.vBird;
+    }
+};
+var getV = Bird.getVBird;
+getV('redBird'); // "redBird的速度是 undefined"
+
+
+// 作为回调函数传递时，this指向全局变量
+var Bird = {
+    vBird : 45,
+    colors: ['blue', 'yellow'],
+    getVBird :function(whichBird){
+        return whichBird + '的速度是 ' + this.vBird;
+    }
+};
+var bird = {
+    vBird : 60
+    method: function(callback) {
+        return callback('blueBird');
+    }
+};
+bird.method(Bird.getVBird); // "blueBird的速度是 undefined"
+```
+上面两种情况，this指向了全局变量，所以需要将绑定对象和方法间的联系。
+bind函数接受被绑定对象和要借用的对象的方法，通过闭包访问被绑定的对象和方法，在bind函数返回后，仍可访问，并总是指向原始被绑定的对象和方法。
+```sh
+function bind(obj, method){
+    return function(){
+        return method.call(obj, [].slice.apply(arguments));
+    };
+}
+var Bird = {
+    vBird : 45,
+    colors: ['blue', 'yellow'],
+    getVBird :function(whichBird){
+        return whichBird + '的速度是 ' + this.vBird;
+    }
+};
+var bird = {
+    vBird : 60
+};
+var birdGetVBird = bind(bird, Bird.getVBird);
+birdGetVBird('blueBird'); //60
 ```
 
 ###bind方法
