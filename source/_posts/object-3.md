@@ -102,9 +102,9 @@ console.log(typeof b.getVBird); //function
 console.log(b.vBird); //undefined
 ```
 
-###临时构造函数模式 + 原型继承
+###原型继承
 
->优点：通过断开父对象和子对象的原型间的直接链接关系，从而解决共享同一个原型所带来的的问题，还能继承原型。另外，子对象仅继承了原型的属性，父级构造函数的任何成员不会被继承。
+>优点：通过断开父对象和子对象的原型间的直接链接关系，从而解决共享同一个原型所带来的的问题，还能继承原型。另外，子对象可以仅继承了原型的属性，父级构造函数的任何成员不会被继承。
 
 ```sh
 function Bird(){
@@ -131,6 +131,43 @@ console.log(b.vBird); //45
 //可以选择只继承原型的属性，父级构造函数的任何成员不会被继承
 var bird = Obj(Bird.prototype);	//选择继承原型，并且child的原型是空对象
 console.log(typeof bird.getVBird); //function，继承了父构造函数的原型
+```
+
+###优化的临时构造函数模式--最后的圣杯，适用于项目的最佳方法
+
+> 优点：避免每次需要继承时都创建临时构造函数，可以使用闭包存储这个临时构造函数,使之只创建一次。
+> 子对象想要添加新的可复用方法到父对象原型中就显得有点麻烦，所以存储原始父对象的引用
+
+```sh
+var inherit = (function(){
+    var F = function(){};
+    return function(C, P) {
+        F.prototype = P.prototype;
+        C.prototype = new F();
+
+        //存储原始父对象的引用
+        C.uper = P.prototype;
+
+        //重置子对象的构造函数指针
+        C.prototype.constructor = C;
+    };
+}());
+
+function Bird(vBird){
+    this.vBird = vBird || 45;
+};
+
+Bird.prototype.getVBird = function(){
+    return this.vBird;
+};
+var bird = function(vBird){
+    Bird.call(this, vBird);
+};
+
+inherit(bird, Bird);
+
+var b = new bird(50);
+console.log(b.getVBird()); //50
 ```
 
 ###针对构造函数模式，通过object.create(object)来实现
@@ -332,12 +369,12 @@ var bird = {
     vBird : 60
 };
 var birdGetVBird = bind(bird, Bird.getVBird);
-birdGetVBird('blueBird'); //60
+birdGetVBird('blueBird'); //"blueBird的速度是 60"
 ```
 
 ###bind方法
 
-ECMAScript5 将bind添加到function.prototype中
+ECMAScript5 将bind添加到function.prototype中。
 
 ```sh
 var Bird = {
