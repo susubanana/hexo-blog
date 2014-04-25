@@ -253,8 +253,8 @@ var Bird = {
         return this.vBird;
     }
 };
-
-var bird = extend(Bird);
+var child = {};
+extend(Bird, bird);
 console.log(bird.getVBird()); //45 继承了Bird
 bird.colors.push('red'); //修改子对象
 console.log(Bird.colors.toString()); //blue,yellow,red  父对象引用类型也跟着被修改
