@@ -1,5 +1,6 @@
 title: web基础--cookie和session
 date: 2013-12-07 21:13:30
+categories: [web开发]
 tags: [web基础]
 ---
 

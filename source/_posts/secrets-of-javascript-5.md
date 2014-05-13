@@ -1,5 +1,6 @@
 title: javascript高级技巧--高阶函数
 date: 2013-12-12 19:15:44
+categories: [web开发]
 tags: [javascript探秘]
 ---
 

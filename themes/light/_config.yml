@@ -8,8 +8,8 @@ menu:
   关于我: /aboutme
 
 widgets:
-- category
 - about_me
+- category
 - tag
 - recent_posts
 - links

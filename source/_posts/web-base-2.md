@@ -1,5 +1,6 @@
 title: web基础--浏览器缓存
 date: 2013-12-06 19:25:18
+categories: [web开发]
 tags: [web基础]
 ---
 

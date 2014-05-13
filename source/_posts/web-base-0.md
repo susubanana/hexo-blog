@@ -1,5 +1,6 @@
 title: web基础--web工作原理
 date: 2013-12-04 21:29:52
+categories: [web开发]
 tags: [web基础]
 ---
 

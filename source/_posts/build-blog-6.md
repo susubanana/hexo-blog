@@ -1,5 +1,6 @@
 title: 用hexo搭建博客--博文技巧
 date: 2013-11-21 19:25:26
+categories: [项目]
 tags: [hexo]
 ---
 

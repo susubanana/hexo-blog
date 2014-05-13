@@ -1,5 +1,6 @@
 title: 用hexo搭建博客--使用github托管博客
 date: 2013-11-19 18:50:31
+categories: [项目]
 tags: [hexo]
 ---
 

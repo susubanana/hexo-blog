@@ -1,5 +1,6 @@
 title: 用hexo搭建博客--部署到github上
 date: 2013-11-19 17:59:38
+categories: [项目]
 tags: [hexo]
 ---
 
@@ -89,4 +90,10 @@ hexo setup_deploy
 hexo d
 ```
 
+若是更改静态样式文件，会有缓存，在部署之前应该敲入如下命令：
 
+```sh
+hexo clean
+hexo g
+hexo d
+```

@@ -1,5 +1,6 @@
 title: javascript设计模式--工厂模式
-date: 2014-01-06 19:10:32
+date: 2014-01-07 20:30:30
+categories: [web开发]
 tags: [javascript探秘]
 ---
 

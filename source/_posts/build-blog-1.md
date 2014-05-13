@@ -1,5 +1,6 @@
 title: 用hexo搭建博客--博客初成
 date: 2013-11-18 22:34:13
+categories: [项目]
 tags: [hexo]
 ---
 

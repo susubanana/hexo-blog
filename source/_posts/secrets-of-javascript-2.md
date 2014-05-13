@@ -1,5 +1,6 @@
 title: javascript作用域--闭包
 date: 2013-12-11 18:30:27
+categories: [web开发]
 tags: [javascript探秘]
 ---
 

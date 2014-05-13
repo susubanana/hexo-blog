@@ -1,5 +1,6 @@
 title: javascript高级技巧--函数绑定bind()
 date: 2013-12-11 20:28:51
+categories: [web开发]
 tags: [javascript探秘]
 ---
 

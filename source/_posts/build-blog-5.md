@@ -1,5 +1,6 @@
 title: 用hexo搭建博客--markdown语法
 date: 2013-11-21 17:35:32
+categories: [项目]
 tags: ['markdown','hexo']
 ---
 

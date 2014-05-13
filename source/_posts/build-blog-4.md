@@ -1,5 +1,6 @@
 title: 用hexo搭建博客--博客主题的配置
 date: 2013-11-19 19:30:49
+categories: [项目]
 tags: [hexo]
 ---
 

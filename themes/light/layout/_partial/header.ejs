@@ -12,7 +12,24 @@
 <nav id="main-nav" class="alignright">
   <ul>
     <% for (var i in theme.menu){ %>
-      <a href="<%- theme.menu[i] %>"><li><%= i %></li></a>
+      <li>
+        <% var isCategories = false;
+           var itemEle = null; %>
+        <% if (site.categories.length){
+             site.categories.sort('name').each(function(item){
+               if(item.name == i){
+                 isCategories = true;
+                 itemEle = item;
+               }
+             });
+        %>
+            <% if (isCategories == true) {%>
+                 <a href="<%- config.root %><%- itemEle.path %>"><%= itemEle.name %></a>
+            <%} else {%>
+                 <a href="<%- theme.menu[i] %>"><%= i %></a>
+            <%}%>
+        <% } %>
+      </li>
     <% } %>
   </ul>
   <div class="clearfix"></div>

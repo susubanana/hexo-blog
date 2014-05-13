@@ -1,5 +1,6 @@
 title: web基础--HTTP协议详解
 date: 2013-12-06 18:20:22
+categories: [web开发]
 tags: [web基础]
 ---
 
