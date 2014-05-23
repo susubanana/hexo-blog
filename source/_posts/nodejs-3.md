@@ -1,6 +1,6 @@
 title: node.js--WebSocket与Socket.io
-date: 2014-04-15 17:58:13
-categories: ['nodejs','移动开发']
+date: 2014-03-25 17:58:13
+categories: ['nodejs']
 tags: ['node.js','html5']
 ---
 
