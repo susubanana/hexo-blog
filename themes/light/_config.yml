@@ -9,6 +9,7 @@ menu:
 
 widgets:
 - about_me
+- category
 - tag
 - recent_posts
 - links
