@@ -2,7 +2,7 @@
 <div class="widget about-me">
   <h3 class="title"><%= theme.about_me.title %></h3>
   <ul class="entry">
-    <li><img src="<%= theme.about_me.pic %>" style="display: block;" /></li>
+    <li><img src="<%= theme.about_me.pic %>" style="display: block;border: none;" /></li>
     <li><a class="name" href="/about" target="_blank"><%= theme.about_me.name %></a></li>
     <% theme.about_me.texts.forEach(function(item){ %>
         <li><%- item %></li>

@@ -1,5 +1,5 @@
 title: 移动Web开发--纯CSS实现的立体按钮
-date: 2014-03-17 19:18:23
+date: 2014-02-18 19:18:23
 categories: ['移动开发']
 tags: [css]
 ---
@@ -66,7 +66,29 @@ html结构为：
 
 主要是通过结合`border`，`border-radius`，`background`，`margin`等属性相辅完成。
 
-再实现一个有3D立体效果的按钮，这个稍微复杂，因为上下两层间还有斜边框，来达到立体效果。
+###用border实现多种图形
+
+* 用border实现梯形
+
+原理：利用border相交的角和背景色来实现梯形。如图：
+
+<img src="/images/cont/mobile-web-23.jpg" style="display: block;" />
+
+对应的样式为：
+
+```sh
+.angular-shape{
+    width:50px;
+    height:50px;
+    border-width:25px;
+    border-style:solid;
+    border-color:#da4632 #ffb601 #009c58 #1369ea;
+}
+```
+
+从上面的图，能看到梯形，但是，从产品到设计，不一定，这样简单的就能符合预期，但是至少梯形的斜边的实现原理可以从这里得到。
+
+如下图，有3D立体效果的按钮，利用上下两层间的梯形，来达到立体效果，这里中间部分是圆角的，所以又不能完全用上面的原理来实现效果，但是原理可以借鉴的。
 
 <img src="/images/cont/mobile-web-22.jpg" style="display: block;" />
 
@@ -79,7 +101,7 @@ html结构为：
     </div>
     <div class="after-l"></div>
     <div class="after-c"></div>
-    <div class="after-r"></div>
+    <div class="after-r"></div
 </a>
 ```
 
@@ -96,8 +118,8 @@ html结构为：
     overflow: hidden;
     position: relative;
 }
+//实现按钮的上半部分的边距和按钮表层的颜色
 .try-wraper .try-cont {
-    //实现按钮的上半部分的边距和按钮表层的颜色
     background: #e45a5a;
     margin: 3px 6px 0;
     width: 90px;
@@ -119,7 +141,7 @@ html结构为：
     line-height: 20px;
     text-align: center;
 }
-//上下两层间的左斜边框
+//借鉴上面的原理，实现梯形左斜边框
 .after-l {
     position: absolute;
     left: 0;
@@ -129,11 +151,11 @@ html结构为：
     overflow: hidden;
     font-size: 0;
     line-height: 0;
-    border-color: #d94949 #c63b3b transparent transparent;
-    border-style: solid solid dashed dashed;
     border-width: 15px 6px 0 0;
+    border-style: solid solid dashed dashed;
+    border-color: #d94949 #c63b3b transparent transparent;
 }
-//上下两层间的中间的矩形达到分层效果
+//梯形中间的矩形
 .after-c {
     position: absolute;
     left: 6px;
@@ -142,7 +164,7 @@ html结构为：
     width: 90px;
     background: #c63b3b;
 }
-//上下两层间的右斜边框
+//借鉴上面的原理，实现梯形的右斜边框
 .after-r {
     position: absolute;
     right: 0;
@@ -152,12 +174,12 @@ html结构为：
     overflow: hidden;
     font-size: 0;
     line-height: 0;
-    border-color: #d94949 transparent transparent #c63b3b;
-    border-style: solid dashed dashed solid;
     border-width: 15px 0 0 6px;
+    border-style: solid dashed dashed solid;
+    border-color: #d94949 transparent transparent #c63b3b;
 }
 ```
-这个立体效果主要也是有边框`border`实现。`border`还能用来做对话框突三角等。总的来说，css嘛，重复，鼓噪，但是不可否认它瘦弱的躯体拥有各种技巧，从这些技巧中提炼出各式各样的神奇视觉效果，在鼓噪中拥抱它吧。
+这个立体效果主要也是用边框`border`实现。
 
 到这里，按钮立体效果完成，多个按钮拼出来的效果如下，就是我们需要的产品：
 
@@ -165,6 +187,45 @@ html结构为：
 
 <img src="/images/cont/mobile-web-20.jpg" style="display: block;" />
 
+* 用border实现三角形。
+
+原理：利用border相交的角把html元素的宽高变为0，来实现三角形。如图：
+
+<img src="/images/cont/mobile-web-24.jpg" style="display: block;" />
+
+对应的样式为：
+
+```sh
+.angular-shape{
+    width:0;
+    height:0;
+    border-width:25px;
+    border-style:solid;
+    border-color:#da4632 #ffb601 #009c58 #1369ea;
+}
+```
+从上图可知，三角形的雏形已经出来了，只需要再处理它其他3个边框的颜色设为透明或者为背景色即可。
+
+实现红色的三角形：
+
+<img src="/images/cont/mobile-web-25.jpg" style="display: block;" />
+
+对应的样式为：
+
+```sh
+.angular-shape{
+    width:0;
+    height:0;
+    border-width:25px;
+    border-style:solid dashed dashed dashed;
+    border-color: #da4632 transparent transparent transparent;
+}
+```
+
+
+
+
+总的来说，css嘛，重复，鼓噪，但是不可否认它瘦弱的躯体拥有各种技巧，从这些技巧中提炼出各式各样的神奇视觉效果，在鼓噪中拥抱它吧。
 
 
 
