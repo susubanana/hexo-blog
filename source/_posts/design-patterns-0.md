@@ -1,7 +1,7 @@
 title: javascript设计模式--单例模式
 date: 2014-01-06 19:10:32
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 单例模式

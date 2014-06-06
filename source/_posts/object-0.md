@@ -1,7 +1,7 @@
 title: javascript面向对象--对象的创建
 date: 2013-12-17 18:50:51
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 对象的创建

@@ -1,7 +1,7 @@
 title: javascript作用域--执行环境
 date: 2013-12-10 19:25:18
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 变量对象

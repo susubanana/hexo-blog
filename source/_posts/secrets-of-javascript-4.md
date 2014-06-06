@@ -1,7 +1,7 @@
 title: javascript高级技巧--函数柯里化
 date: 2013-12-12 17:45:24
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 函数柯里化

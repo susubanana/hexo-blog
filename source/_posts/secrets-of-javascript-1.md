@@ -1,7 +1,7 @@
 title: javascript作用域--减少全局变量污染
 date: 2013-12-10 21:19:18
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 全局变量定义

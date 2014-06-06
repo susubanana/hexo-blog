@@ -1,7 +1,7 @@
 title: javascript面向对象--对象的成员
 date: 2013-12-21 19:00:06
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 私有属性和方法

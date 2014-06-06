@@ -63,7 +63,7 @@ logger: false
 logger_format:
 
 # Date / Time format
-## Hexo uses Moment.js to parse and display date
+## Hexo uses Moment.flappy_js to parse and display date
 ## You can customize the date format as defined in
 ## http://momentjs.com/docs/#/displaying/format/
 date_format: MMM D YYYY

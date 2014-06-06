@@ -1,7 +1,7 @@
 title: javascript设计模式--装饰者模式
 date: 2014-01-08 16:15:32
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 装饰者模式

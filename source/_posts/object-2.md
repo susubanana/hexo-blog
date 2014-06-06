@@ -1,7 +1,7 @@
 title: javascript面向对象--对象的继承（一）
 date: 2013-12-22 18:00:32
 categories: [web开发]
-tags: [javascript探秘]
+tags: [javascript]
 ---
 
 理解面向对象继承
