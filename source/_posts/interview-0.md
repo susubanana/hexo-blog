@@ -80,17 +80,19 @@ html题集
     * 如果article元素、aside元素或nav元素更符合使用条件，不要使用section元素。
     * 不要为没有标题的内容区块使用section元素。
 
+pre 元素可定义预格式化的文本。被包围在 pre 元素中的文本通常会保留空格和换行符。
+fieldset 元素可将表单内的相关元素分组。
+
 在HTML5中，article元素可以看成是一种特殊类型的section元素，它比section元素更强调独立性。即section元素强调分段或分块，而article强调独立性。具体来说，如果一块内容相对来说比较独立的、完整的时候，应该使用article元素，但是如果你想将一块内容分成几段，一般带标题的时候，应该使用section元素。另外，在HTML5中，当使用CSS样式的时候，应该使用div。
 
 css题集
 ---------------------
 ### CSS选择符有哪些？哪些属性可以继承？优先级？内联和important哪个优先级高？
 
-Class 可继承
-伪类A标签可以继承
-列表 UL LI DL DD DT 可继承
-优先级就近原则，样式定义最近者为准
-
+* Class 可继承
+* 伪类A标签可以继承
+* 列表 UL LI DL DD DT 可继承
+* 优先级就近原则，样式定义最近者为准
 优先级为
 !important > 内联样式 > [ id > class > tag ]
 
@@ -103,10 +105,87 @@ Class 可继承
 渐进增强：
 从被所有浏览器支持的基本功能开始，逐步地添加那些只有新式浏览器才支持的功能。渐进增强是值得所有开发者采用的做法。渐进增强方案并不假定所有用户都支持javascript，而总是提供一种候补方法，确保用户可以访问（主要的）内容。
 使用渐进增强时，无需为了一个已成型的网站在旧式浏览器下正常工作而做逆向工程。首先，只需要为所有的设备和浏览器准备好清晰且语义化的HTML以及完善的内容，然后再以无侵入（unobtrusive）的方式向页面增加无害于基础浏览器的额外样式和功能。当浏览器升级时，它们会自动地呈现出来并发挥作用。
+
 ### 双飞翼
+1. 最外围模块： float: left;position: relative;
+2. 中间模块自适应： float:left;width: 100%;中间模块里面的模块：margin：0 rightWidth 0 leftWidth;
+3. 最左边模块： float: left;margin-left: -100%;position: relative;
+4. 最右边模块： float: left;margin-left: rightWidth;position: relative;
+
 ### IEhack
+
+* `\9` `background:red\9; //IE6 - IE10背景变红色`
+* `*` `*background:red; //IE6 - IE7背景变红色`
+* `_` `_background:red; //IE6背景变红色`
+* 条件注释判断浏览器
+  <!--[if IE]> =所有的IE可识别 <![endif]-->
+  <!–[if IE 8]> = IE8 仅IE8可识别 <![endif]-->
+  <!–[if lt IE 8]> = IE7或更低版本 <![endif]-->
+  <!–[if gte IE 8]> = IE8或更高版本 <![endif]-->
+  gt 大于运算符
+  lt 小于运算符
+  gte 大于或等于运算
+  lte 小于或等于运算
+
 ### display: inline-block
+
+display: inline-block 后，元素创建了一个行级的块容器，该元素内部（内容）被格式化成一个块元素，同时元素本身则被格式化成一个行内元素。inline-block 的元素既具有 block 元素可以设置宽高的特性，同时又具有 inline 元素默认不换行的特性。
+
+IE 从 5.5 开始就已经支持 display:inline-block，IE6、7 中的 inline-block 更像是 IE 的私有属性值，但是它所支持的 inline-block 不能等同于 CSS2.1 中的 inline-block，因为 IE5.5 比 CSS2.1 更早提出 inline-block 的概念并作为所谓的「私有属性值」使用，所以二者表现出来的效果是不完全一致。
+
+IE 5.5、6、7 中 块级元素对 inline-block 支持不完整，如果要达到类似的效果，需要先设置`*display:inline; zoom: 1;`触发 hasLayout，块级元素触发后是没有水平间隙的。
+
+标准浏览器设置display:inline-block 后，元素会产生水平空隙，这是因为行内元素默认就有空隙存在，所以这并不是 inline-block 后产生的 bug。
+
+
+
+```sh
+.nav-report .nav-list li {
+    font-size: 0;
+    letter-spacing: -0.31em; /* webkit: collapse white-space between units */
+    *letter-spacing: normal; /* reset IE < 8 */
+    word-spacing: -0.43em; /* IE < 8 && gecko: collapse white-space between units */
+    margin: 0;
+}
+
+.nav-report .nav-list a {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 20px;
+    background: red;
+    display: inline-block;
+    zoom: 1; *display: inline; /* IE < 8: fake inline-block */
+    letter-spacing: normal;
+    word-spacing: normal;
+    vertical-align: top;
+}
+```
+
 ### float与position
+在css中有一个z-index属性，因为网页是“立体的”，它有z轴，这个z轴的大小就由z-index控制。所有页面元素均位于z-index:0这一层，在这一层按顺序排列的元素就构成了“文档流”。position和float，它们都是通过改变文档流来实现定位。
+
+**float实际上是将块级元素脱离普通文档流，但还是基于普通文档流**。float属性定位的元素可以向左或向右移动，直到它的外边缘碰到包含元素或另一个浮动元素的边框为止。由于浮动元素脱离普通文档流，所以普通文档流中的块元素表现得就像浮动元素不存在一样。
+
+position有四个值：
+1. 静态（static）：
+
+元素顺序显示，在同一个文档流中，静态定位仅仅意味着内容遵循正常从上到下的HTML流。
+
+2. 相对(relative)：
+
+一个相对定位的元素相对它在HTML流中的当前位置而放置。相对定位的元素在原有位置进行偏移，偏移后的位置可能覆盖别人（是漂浮在上方），但它原来的位置也空着。。相对定位的主要用处不是移动一个元素，而是给行内在它内部的绝对定位的元素设定一个新的参考点。
+
+3. 绝对(absolute)：
+
+绝对定位通过指定一个左、右、上或者下的位置来确定一个元素相对于父元素的边界进行定位的的位置。此外，绝对定位的元素被完全与普通文档流分离，换句话说，网页上的其他东西甚至不知道这个绝对定位的元素的存在。
+
+4. 固定(fixed)：
+
+一个固定的元素被锁定在屏幕的位置上。fixed是相对浏览器窗口的固定位置定位。
+
+**position:absolute和float会隐式的改变display类型，不论之前是什么类型的元素（display:none除外），只要设置了position:absolute或float，都会让元素以display:inline-block的方式显示，可以设置长宽，默认宽度并不占满父元素，就算是显示的设置display:inline或display:block，仍然无效。**
+**注意一点的是，position:relative并不能够隐式的改变display的类型**
+
 ### css3比较流行的属性
 
 javascript题集
