@@ -400,6 +400,9 @@ document.querySelectorAll() //返回一个nodelist对象，能避免大多数性
 ### jquery中一些API的实现原理，如：on、bind、delegate、live的区别和实现原理，ready实现机制。
 ### ECMAScript5增加了哪些API
 ### 如何解决回调层级过深的问题
+分解成多个异步回调函数，并借助第三方函数处理回调函数的协作关系来解决多个回调函数对应一个业务逻辑。
+
+
 ### Ajax跨域的几种方法以及每种方法的原理
 ### 当需要更新一个ui节点下的1000个li节点的某个属性时候该怎么做才能保证页面性能
 ### 多个图片加载，很慢如何处理
@@ -408,6 +411,11 @@ http://blog.wakao.me/index.php/page/2
 
 ### 什么是哈希表？
 ### 请指出Javascript宿主对象和内置对象的区别？
+**宿主对象**：由ECMAScript实现的宿主环境提供的对象，可以理解为：浏览器提供的对象。所有的BOM和DOM都是宿主对象，如window和document。
+
+**内置对象**：由 ECMAScript 实现提供的、独立于宿主环境的所有对象，在 ECMAScript 程序开始执行时出现。每个内置对象都是本地对象。Array、Boolean、Date、Function、Global、Math、Number、Object、RegExp、String以及各种错误类对象。
+
+
 ### JavaScript的模板系统
 ### 什么是FOUC？如何来避免FOUC
 
@@ -415,7 +423,7 @@ http://blog.wakao.me/index.php/page/2
 原因大致为：
 1. 使用import方法导入样式表。
 2. 将样式表放在页面底部
-3. 有几个样式表，放在html结构的不同位置。
+3. 有几个样式表，放在html结构的不同位置。,
 
 原理：当样式表晚于结构性html加载，当加载到此样式表时，页面将停止之前的渲染。此样式表被下载和解析后，将重新渲染页面，也就出现了短暂的花屏现象。
 
