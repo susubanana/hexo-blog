@@ -251,7 +251,7 @@ javascript是动态类型语言，this关键字在执行的时候才能确定是
 5. 减少对dom的访问，将循环计算的操作尽量放在ECMAscript本身处理。
 6. 对比getElementById()等返回的是HTML集合，HTML集合与文档一直保持连接，每次需要获取最新信息时，都要重新执行查询过程，querySelectorAll()返回的是NodeList静态列表的类数组对象，不实时对应文档结构，因而不会每次访问时都重新执行查询过程。
 7. 减少重绘重排，如合并修改样式，批量修改dom(先隐藏元素，批量修改后，再显示，或针对要修改的节点创建一个副本，先修改副本然后替换旧的节点，最好的方式是在文档之外创建一个文档，针对这个文档操作，然后再将它附加到原始节点中，只操作一次元素节点。)
-8. 使用内容分发网络，将网站内容分散到多个、处于不同地域位置的服务器上可以加快下载速度，通过向地理最近的用户传输内容，可以极大减少网络延时。
+8. 使用内容分发网络，将网站内容分散到多个、处于不同地域位置的服务器上可以加快下载速度，通过向地理最近的用户传输内容，另外，浏览器同一时间针对同一域名下的请求有一定数量限制（一般10个以内），超过限制数目的请求会被阻止。可以极大减少网络延时。
 9. Gzip压缩文件内容，通过设置HTTP请求中有Accept-Encoding文件头的压缩格式。Gzip大概可以减少70%的响应规模。
 10. 避免使用滤镜，IE滤镜的问题在于浏览器加载图片时它会终止内容的呈现并且冻结浏览器。在每一个元素（不仅仅是图片）它都会运算一次，增加了内存开支，因此它的问题是多方面的。可以使用PNG8格式来代替。如果确实需要使用AlphaImageLoader，使用下划线_filter又使之对IE7以上版本的用户无效。
 11. 优化CSS Sprite，在Sprite中水平排列你的图片，垂直排列会稍稍增加文件大小。Sprite中把颜色较近的组合在一起可以降低颜色数。不要在Spirite的图像中间留有较大空隙。这虽然不大会增加文件大小，但它需要更少的内存来把图片解压为像素地图。100x100的图片为1万像素，而1000x1000就是100万像素。
@@ -280,6 +280,19 @@ function hash_unique(array) {
 console.log(hash_unique(array));
 ```
 
+###字符串的操作
+* `str.length` 获取字符串的长度
+* `str.charAt(index)` 获取字符串的指定位置的字符
+* `str.slice(start, end),str.substring(start, end),str.substr(start, num)` 获取字符串的子串，第二个参数可选，只指定start，返回的三个字符串副本一致。指定第二个参数时，前两者返回以start位置开始，end位置结束（不包括end位置字符）的字符串；substr返回的是以start位置开始的num个字符的字符串。
+  上面三个方法的第一个参数为负值时，slice和substr会将第一个参数加上字符串的长度作为起始位置，substring会将所有负值参数转为0：假设长度是5，`str.slice(-1)`，`str.substring(-1)`，`str.substr(-1)`会转化为：`str.slice(4)`，`str.substring(0)`，`str.substr(4)`
+  上面三个方法的第二个参数为负值时，slice将第二个参数加上字符串的长度作为起始结束位置，substring会将所有负值参数转为0，substr会将第二个参数转为0，所以返回空字符串：假设长度是5，`str.slice(2,-1)`，`str.substring(2, -1)`，`str.substr(2, -1)`会转化为：`str.slice(2, 4)`，`str.substring(2, 0)`，`str.substr(2, 0)`
+* `str.indexOf()/str.lastIndexOf()` 查找给定字符串，str.indexOf(string)从开头向后搜索，str.lastIndexOf()是从末尾向前搜索子字符串，返回指定字符串的位置。
+* `str.trim()` 删除字符串前缀或者后缀的所有空格。
+* `str.toLowerCase()、str.toUpperCase()` 字符串大小写转换
+* `str.match()/str.search()` 字符串模式匹配，str.match()只接收一个参数（正则表达式/RegExp对象），返回一个数组。str.search()只接收一个参数（正则表达式/RegExp对象），返回的是第一个匹配项的索引。
+* `str.split()`基于指定的分隔符，将一个字符串分割成多个子字符串，并放在一个数组中。
+* `str.localeCompare(字符串)` 比较两个字符串是否相等，字符串的首字母在str前面则返回1，相同的字符串则返回0，首字母排在str后面则返回-1。
+
 ### 数组的操作
 
 * `toString()/valueOf()/toLocaleString()` 返回将数组中的值的字符串的形式拼接成以`,`分隔的字符串。
@@ -294,11 +307,98 @@ console.log(hash_unique(array));
   * 在指定位置插入数据项：`splice(1, 0, 'ok')` 参数：起始位置，要删除的项的数量，要插入的项，返回空数组。
   * 指定位置中替换任意项：`splice(1, 1, 'ok')` 参数：起始位置，要删除的项的数量，要插入的项，并返回删除后的项组成的新数组。
 * `indexOf()/lastIndexOf()`接收两个参数：要查找的项，查找起点位置的索引（可选，没有则从位置0开始查找），`lastIndexOf()` 从数组的末尾开始查找，并返回查找项在数组中的位置。支持的浏览器有IE9+，火狐，safari，谷歌，opera。
-*
+
+### eval()方法
+eval方法就是一个完整的javascript解析器，它接收一个参数（要执行的ECMAScript语句或者字符串）。使用eval执行的代码比不使用eval的代码慢100倍以上，使用`eval`，则`eval`中的代码（实际上为字符串）无法预先识别其上下文，无法被提前解析和优化，即无法进行预编译的操作。所以，其性能也会大幅度降低。使用eval方法容易被恶意代码侵入，有安全性隐患。
 
 ### javascript操作节点和jquery操作节点（包括位置和事件）
-###jquery中一些API的实现原理，如：on、bind、delegate、live的区别和实现原理，ready实现机制。
 
+javascript原生创建新节点
+```sh
+document.createDocumentFragment() //创建一个DOM片段
+document.createElement() //创建一个具体的元素
+document.createTextNode() //创建一个文本节点
+```
+jquery创建节点
+```sh
+var ele = $('<p>创建节点</p>')
+````
+
+
+javascript原生添加、移除、替换、插入
+```sh
+element.appendChild(newNode) //用于向childNodes列表的末尾添加一个节点，返回要添加的元素节点，若child节点是存在节点则移动到childNodes列表末尾。
+element.removeChild(child)
+element.replaceChild(newNode, replaceChild) //用于替换节点，接受两个参数，第一参数是要插入的节点，第二个是要替换的节点，返回被替换的节点
+element.insertBefore(newNode, indexChild) //用于指定插入位置，接受2个参数，第一个是要插入的节点，第二个是参照节点，节点插入到参照节点的前面，返回要添加的元素节点
+element.cloneNode() //用于复制节点，接受一个布尔值参数，true 表示深复制（复制节点及其所有子节点），false 表示浅复制（复制节点本身，不复制子节点）
+```
+
+jquery添加、移除、替换、插入
+```sh
+$(A).append(B) //将B加入到A内部末尾
+$(A).appendTo(B) //将A加入到B内部末尾
+$(A).prepend(B) //将B加入到A内部开头
+$(A).prependTo(B) //将A加入到B内部开头
+$(A).after(B) //将B加入到A后面
+$(A).insertAfter(B) //将A加入到B后面
+$(A).before(B) //将B加入到A前面
+$(A).insertBefore(B) //将A加入到B前面
+
+$(A).remove()
+$(A).clone()
+$(A).replaceWidth()
+````
+
+查找
+```sh
+document.getElementsByTagName() //通过标签名称
+document.getElementsByName() //通过元素的Name属性的值
+document.getElementById() //通过元素Id，唯一性
+document.documentElement //取得html标签
+document.body //取得body标签
+```
+
+### HTML集合和NodeList的区别
+NodeList是一个类数组的静态列表，在访问DOM文档时实时动态查询，也就是文档改变时，都会立即得到更新，始终保持最新最准确的信息，可通过[index]或item(index)访问。
+返回NodeList的API：
+```sh
+element.childNodes
+document.querySelectorAll()
+```
+
+HTMLCollection 是HTML 元素的集合，在访问DOM文档时实时动态查询，也就是文档改变时，都会立即得到更新，始终保持最新最准确的信息，比NodeList多了一个namedItem()方法，这个方法是通过name属性查找。
+返回HTMLCollection的API：
+
+```sh
+element.children
+document.images
+document.forms
+document.all
+```
+
+IE/火狐返回HTMLCollection，谷歌、opera、safari返回NodeList的API：
+
+```sh
+document.getElementsByName()
+document.getElementsByTagName()
+document.getElementsByClassName()
+```
+
+两者因为对文档的实时查询，都有性能方面的考虑，但是querySelectAll返回的NodeList对象，底层实现如同一个快照，不用不断对文档进行动态查询，则避免大多性能方面的考虑。
+
+```sh
+document.querySelectorAll() //返回一个nodelist对象，能避免大多数性能问题。
+```
+
+### element.childNodes和element.children的区别
+
+`element.childNodes` 它返回指定元素的子元素集合，包括HTML节点，所有属性，文本，IE8及以下版本会返回html节点，IE8+会返回具体节点类型。只有当nodeType==1时才是元素节点，2是属性节点，3是文本节点。
+
+`element.children` 只返回html元素的节点，除此之外和childNodes没什么区别。IE8及以下版本也会包含注释节点（无注释则返回元素节点）。其他浏览器均返回元素节点。
+
+### jquery中一些API的实现原理，如：on、bind、delegate、live的区别和实现原理，ready实现机制。
+### ECMAScript5增加了哪些API
 ### 如何解决回调层级过深的问题
 ### Ajax跨域的几种方法以及每种方法的原理
 ### 当需要更新一个ui节点下的1000个li节点的某个属性时候该怎么做才能保证页面性能
@@ -306,14 +406,18 @@ console.log(hash_unique(array));
 图片懒加载
 http://blog.wakao.me/index.php/page/2
 
+### 什么是哈希表？
+### 请指出Javascript宿主对象和内置对象的区别？
+### JavaScript的模板系统
+### 什么是FOUC？如何来避免FOUC
 
+以无样式显示页面内容的瞬间闪烁,这种现象称之为文档样式短暂失效(Flash of Unstyled Content),简称为FOUC。
+原因大致为：
+1. 使用import方法导入样式表。
+2. 将样式表放在页面底部
+3. 有几个样式表，放在html结构的不同位置。
 
-
-
-
-
-
-
+原理：当样式表晚于结构性html加载，当加载到此样式表时，页面将停止之前的渲染。此样式表被下载和解析后，将重新渲染页面，也就出现了短暂的花屏现象。
 
 
 
