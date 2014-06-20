@@ -18,7 +18,7 @@ var jQuery = function( selector, context ) {
 ```
 
 这里定义了jQuery对象，返回jQuery.fn.init的实例，也就是说jQuery对象是jQuery.fn.init的实例。
-
+<!--more-->
 **jQuery.fn.init的定义如下**：
 
 ```sh
@@ -225,3 +225,8 @@ init.prototype = jQuery.fn;
 // Initialize central reference
 rootjQuery = jQuery( document );
 ```
+
+
+
+http://www.360doc.com/content/13/1128/09/10504424_332741972.shtml
+http://nuysoft.iteye.com/blog/1190542

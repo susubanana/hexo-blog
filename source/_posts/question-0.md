@@ -142,8 +142,6 @@ IE 5.5、6、7 中 块级元素对 inline-block 支持不完整，如果要达�
 
 标准浏览器设置display:inline-block 后，元素会产生水平空隙，这是因为行内元素默认就有空隙存在，所以这并不是 inline-block 后产生的 bug。
 
-
-
 ```sh
 .nav-report .nav-list li {
     font-size: 0;
@@ -165,6 +163,8 @@ IE 5.5、6、7 中 块级元素对 inline-block 支持不完整，如果要达�
     vertical-align: top;
 }
 ```
+
+display属性还有none/inline/block/table相关属性值/list-item/inherit，`display：none`和`visiability：hidden`都可以隐藏div，区别是前者不占据文档的空间，后者还是占据文档的位置。
 
 ### float与position
 在css中有一个z-index属性，因为网页是“立体的”，它有z轴，这个z轴的大小就由z-index控制。所有页面元素均位于z-index:0这一层，在这一层按顺序排列的元素就构成了“文档流”。position和float，它们都是通过改变文档流来实现定位。
@@ -192,6 +192,32 @@ position有四个值：
 
 **position:relative并不能够隐式的改变display的类型**
 
+### normal flow
+normal flow 应该就是常规流的意思，它是相对于浮动元素和绝对定位的一个概念。也就是平时理解的常规文档流，在‘normal flow’中的盒子属于块极或者行内格式化上下文，块极盒子参与块格式化上下文的计算，也就是在常规流里垂直边距（vertical margin）是重叠的。行内盒子参与行内格式化上下文的计算，在水平方向上，块级元素的边距从来不会重叠。
+
+### margin collapse
+在常规文档流中，margin collapse一般有两种情况：
+* 在垂直方向上相邻的两个元素的margin会重叠，取两者中最大的值。
+<img src="/images/cont/question-0.jpg" style="display:block;margin-bottom: 20px;" />
+* 子元素与父元素之间也会产生重叠现象，重叠后的外边距，等于其中最大者。
+<img src="/images/cont/question-1.jpg" style="display:block;" />
+
+**防止外边距重叠解决方案**：
+* 外层元素padding代替。
+* 内层元素透明边框 border:1px solid transparent。
+* 使内容元素BFC块级元素格式化。
+
+### 什么是FOUC？如何来避免FOUC
+
+以无样式显示页面内容的瞬间闪烁,这种现象称之为文档样式短暂失效(Flash of Unstyled Content),简称为FOUC。
+原因大致为：
+1. 使用import方法导入样式表。
+2. 将样式表放在页面底部
+3. 有几个样式表，放在html结构的不同位置。
+
+原理：当样式表晚于结构性html加载，当加载到此样式表时，页面将停止之前的渲染。此样式表被下载和解析后，将重新渲染页面，也就出现了短暂的花屏现象。
+
+
 ### css3比较流行的属性
 
 javascript
@@ -202,8 +228,6 @@ javascript
 引用类型复制：将一个引用类型变量的引用复制给新变量分配的内存空间中，复制的是引用类型的引用，这个引用指向堆中同一个对象。改变其中一个变量就会影响另一个变量。
 
 基本类型值的传递是按基本类型变量复制一样，而引用类型传递也是按引用类型变量复制一样，但是作为参数传递的时候，会将这个变量在内存中的地址复制给一个局部变量。而javascript中所有函数的参数都是按值传递的，困惑的是，在访问变量的时候是按值访问还是按引用访问两种方式。
-
-
 
 
 ### 理解类型转换
@@ -308,8 +332,23 @@ console.log(hash_unique(array));
   * 指定位置中替换任意项：`splice(1, 1, 'ok')` 参数：起始位置，要删除的项的数量，要插入的项，并返回删除后的项组成的新数组。
 * `indexOf()/lastIndexOf()`接收两个参数：要查找的项，查找起点位置的索引（可选，没有则从位置0开始查找），`lastIndexOf()` 从数组的末尾开始查找，并返回查找项在数组中的位置。支持的浏览器有IE9+，火狐，safari，谷歌，opera。
 
+### ECMAScript5增加了哪些API
+ECMAScript5中增加的数组方法
+* `forEach()` 遍历数组，为每个元素调用指定函数。
+* `map()` 给数组每个元素传递指定的函数，并返回一个包含函数返回的结果的新数组。
+* `every()` 给数组每个元素传递指定的函数，函数的结果都返回true，才会返回true。
+* `some()` 给数组每个元素传递指定的函数，函数的结果至少有一个返回true，才会返回true。
+* `indexOf()/lastIndexOf()`接收两个参数：要查找的项，查找起点位置的索引（可选，没有则从位置0开始查找），`lastIndexOf()` 从数组的末尾开始查找，并返回查找项在数组中的位置。支持的浏览器有IE9+，火狐，safari，谷歌，opera。
+* `isArray()` 判定是否为数组。typeof 对数组返回对象，instanceof只能针对普通的数组，不能视为一个可靠的数组检测方法。对于不能兼容isArray()的浏览器，可以使用如下代码：
+```sh
+var isArray = Function isArray || function(o){
+    return typeof o === "Object" && Object.prototype.toString().call(o) === "[Object Array]";
+};
+```
+
+
 ### eval()方法
-eval方法就是一个完整的javascript解析器，它接收一个参数（要执行的ECMAScript语句或者字符串）。使用eval执行的代码比不使用eval的代码慢100倍以上，使用`eval`，则`eval`中的代码（实际上为字符串）无法预先识别其上下文，无法被提前解析和优化，即无法进行预编译的操作。所以，其性能也会大幅度降低。使用eval方法容易被恶意代码侵入，有安全性隐患。
+eval()方法就是一个完整的javascript解析器，它接收一个参数（要执行的ECMAScript语句或者字符串）。使用eval()执行的代码比不使用eval的代码慢100倍以上，使用`eval`，则`eval`中的代码（实际上为字符串）无法预先识别其上下文，无法被提前解析和优化，即无法进行预编译的操作。所以，其性能也会大幅度降低。使用eval方法容易被恶意代码侵入，有安全性隐患。
 
 ### javascript操作节点和jquery操作节点（包括位置和事件）
 
@@ -398,7 +437,7 @@ document.querySelectorAll() //返回一个nodelist对象，能避免大多数性
 `element.children` 只返回html元素的节点，除此之外和childNodes没什么区别。IE8及以下版本也会包含注释节点（无注释则返回元素节点）。其他浏览器均返回元素节点。
 
 ### jquery中一些API的实现原理，如：on、bind、delegate、live的区别和实现原理，ready实现机制。
-### ECMAScript5增加了哪些API
+
 ### 如何解决回调层级过深的问题
 分解成多个异步回调函数，并借助第三方函数处理回调函数的协作关系来解决多个回调函数对应一个业务逻辑。
 
@@ -409,23 +448,14 @@ document.querySelectorAll() //返回一个nodelist对象，能避免大多数性
 图片懒加载
 http://blog.wakao.me/index.php/page/2
 
-### 什么是哈希表？
+
 ### 请指出Javascript宿主对象和内置对象的区别？
 **宿主对象**：由ECMAScript实现的宿主环境提供的对象，可以理解为：浏览器提供的对象。所有的BOM和DOM都是宿主对象，如window和document。
 
 **内置对象**：由 ECMAScript 实现提供的、独立于宿主环境的所有对象，在 ECMAScript 程序开始执行时出现。每个内置对象都是本地对象。Array、Boolean、Date、Function、Global、Math、Number、Object、RegExp、String以及各种错误类对象。
 
-
+### 什么是哈希表
 ### JavaScript的模板系统
-### 什么是FOUC？如何来避免FOUC
-
-以无样式显示页面内容的瞬间闪烁,这种现象称之为文档样式短暂失效(Flash of Unstyled Content),简称为FOUC。
-原因大致为：
-1. 使用import方法导入样式表。
-2. 将样式表放在页面底部
-3. 有几个样式表，放在html结构的不同位置。,
-
-原理：当样式表晚于结构性html加载，当加载到此样式表时，页面将停止之前的渲染。此样式表被下载和解析后，将重新渲染页面，也就出现了短暂的花屏现象。
 
 
 
