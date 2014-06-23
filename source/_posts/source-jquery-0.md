@@ -1,5 +1,6 @@
 title: jQuery源码解读 -- jQuery对象的初始化
-date: 2014-06-19 09:59:13
+date: 2014-06-19 19:59:13
+categories: [web开发]
 tags: [jQuery]
 ---
 
@@ -18,7 +19,10 @@ var jQuery = function( selector, context ) {
 ```
 
 这里定义了jQuery对象，返回jQuery.fn.init的实例，也就是说jQuery对象是jQuery.fn.init的实例。
+
+创建对象实例时，使用new 构造函数()，会返回这个构造函数的实例，但假若构造函数内部有返回值，这个new出来的实例就会被丢弃，最终使用构造函数内部返回的值作为new 构造函数()表达式的值。所以jQuery对象就是利用这一特性，因而，jQuery对象是jQuery.fn.init的实例。
 <!--more-->
+
 **jQuery.fn.init的定义如下**：
 
 ```sh
@@ -63,7 +67,7 @@ jQuery.fn = jQuery.prototype = {
     ...
 }
 ```
-这里定义了jQuery的原型就是jQuery.fn
+这里定义了jQuery的原型就是jQuery.prototype，jQuery.fn是jQuery.prototype的简写，所有方法或者属性挂载到jQuery.fn上，jQuery.fn加强了内部的封装。
 
 
 由上面三段代码得知关系如下：
@@ -104,11 +108,188 @@ jQuery.fn.init.prototype 和 jQuery.fn 的引用指向同一个引用地址，�
 
 ### jQuery.fn.init生成jQuery对象的过程
 
-这个函数接收三个参数，分别是选择器，上下文和root，
+这个函数接收三个参数，分别是选择器，context和rootjQuery。
+context：可以不传入或者传入DOM元素、jQuery对象、或者javascript对象。
+rootjQuery：包含了document的jQuery对象，用于document.getElementById()查找失败或者未指定选择器和context的情况。
 
-源码：
+源码分析：
+
+如果选择器为空、null、undefined的时候，返回空的jQuery对象
 ```sh
-var	init = jQuery.fn.init = function( selector, context ) {
+		// HANDLE: $(""), $(null), $(undefined), $(false)
+		if ( !selector ) {
+			return this;
+		}
+
+```
+
+如果参数是字符串，则使用正则表达式检测selector是html还是#id
+```sh
+// Handle HTML strings
+if ( typeof selector === "string" ) {
+    if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
+        // Assume that strings that start and end with <> are HTML and skip the regex check
+        match = [ null, selector, null ];
+
+    } else {
+        match = rquickExpr.exec( selector );
+    }
+
+```
+  * 如果字符串是html标签，则调用jQuery.parseHTML()来创建DOM
+  ```sh
+  // Match html or make sure no context is specified for #id
+    if ( match && (match[1] || !context) ) {
+
+        // HANDLE: $(html) -> $(array)
+        if ( match[1] ) {
+            context = context instanceof jQuery ? context[0] : context;
+
+            // scripts is true for back-compat
+            // Intentionally let the error be thrown if parseHTML is not present
+            jQuery.merge( this, jQuery.parseHTML(
+                match[1],
+                context && context.nodeType ? context.ownerDocument || context : document,
+                true
+            ) );
+
+            // HANDLE: $(html, props)
+            if ( rsingleTag.test( match[1] ) && jQuery.isPlainObject( context ) ) {
+                for ( match in context ) {
+                    // Properties of context are called as methods if possible
+                    if ( jQuery.isFunction( this[ match ] ) ) {
+                        this[ match ]( context[ match ] );
+
+                    // ...and otherwise set as attributes
+                    } else {
+                        this.attr( match, context[ match ] );
+                    }
+                }
+            }
+
+            return this;
+  ```
+    这里看一下jQuery.parseHTML()的实现原理，如果是简单的html标签，在jQuery.parseHTML()内，使用document.createElement()创建DOM，如果是复杂的html标签，再调用jQuery.buildFragment()，利用浏览器的innerHTML机制创建DOM。
+
+    ```sh
+    jQuery.parseHTML = function( data, context, keepScripts ) {
+    	if ( !data || typeof data !== "string" ) {
+    		return null;
+    	}
+    	if ( typeof context === "boolean" ) {
+    		keepScripts = context;
+    		context = false;
+    	}
+    	context = context || document;
+
+    	var parsed = rsingleTag.exec( data ),
+    		scripts = !keepScripts && [];
+
+    	// 如果是简单的html标签，使用document.createElement()创建DOM
+    	if ( parsed ) {
+    		return [ context.createElement( parsed[1] ) ];
+    	}
+
+        //如果是复杂的html标签，在jQuery.buildFragment()内，利用浏览器的innerHTML机制创建DOM
+    	parsed = jQuery.buildFragment( [ data ], context, scripts );
+
+    	if ( scripts && scripts.length ) {
+    		jQuery( scripts ).remove();
+    	}
+
+    	return jQuery.merge( [], parsed.childNodes );
+    };
+    ```
+  * 如果字符串是#id，则调用document.getElementById()查找DOM
+  ```sh
+    // HANDLE: $(#id)
+    } else {
+        elem = document.getElementById( match[2] );
+
+        // Check parentNode to catch when Blackberry 4.6 returns
+        // nodes that are no longer in the document #6963
+        if ( elem && elem.parentNode ) {
+            // Handle the case where IE and Opera return items
+            // by name instead of
+            //如果找到的值与传入的ID不符，则使用name属性查找，opera可能按name查找而不是ID
+            if ( elem.id !== match[2] ) {
+                return rootjQuery.find( selector );
+            }
+
+            // Otherwise, we inject the element directly into the jQuery object
+            this.length = 1;
+            this[0] = elem;
+        }
+
+        this.context = document;
+        this.selector = selector;
+        return this;
+    }
+
+  ```
+
+如果selector不是html元素和#id，而是表达式
+```sh
+// HANDLE: $(expr, $(...))
+} else if ( !context || context.jquery ) {
+    //如果没有指定上下文，则使用rootjQuery查找
+    //如果指定了上下文，则使用context查找
+    return ( context || rootjQuery ).find( selector );
+
+// HANDLE: $(expr, context)
+// (which is just equivalent to: $(context).find(expr)
+} else {
+    //如果指定了上下文，但上下文不是jQuery对象，则先创建一个包含context的jQuery对象，然后查找
+    return this.constructor( context ).find( selector );
+}
+```
+
+
+如果选择器是DOM元素(如果参数selector含有属性nodeType，则可认为selector是DOM元素，返回包含DOM元素的jQuery对象)
+
+```sh
+// HANDLE: $(DOMElement)
+    } else if ( selector.nodeType ) {
+        this.context = this[0] = selector;
+        this.length = 1;
+        return this;
+
+    // HANDLE: $(function)
+    // Shortcut for document ready
+    }
+```
+
+如果selector是一个函数，则在$(document).ready(functon(){})中调用此函数
+```sh
+// HANDLE: $(function)
+    // Shortcut for document ready
+    } else if ( jQuery.isFunction( selector ) ) {
+        return typeof rootjQuery.ready !== "undefined" ?
+            rootjQuery.ready( selector ) :
+            // Execute immediately if ready is not present
+            selector( jQuery );
+    }
+
+```
+
+如果参数是jQuery对象，如果参数含有selector属性，则是jQuery对象，将会复制它selector和context属性。
+```sh
+if ( selector.selector !== undefined ) {
+    this.selector = selector.selector;
+    this.context = selector.context;
+}
+```
+
+返回当前的jQuery对象
+```sh
+	return jQuery.makeArray( selector, this );
+```
+
+
+jQuery.fn.init的源码归总：
+```sh
+var rootjQuery,
+	init = jQuery.fn.init = function( selector, context ) {
     var match, elem;
 
     //如果选择器为空、null、undefined的时候，返回空的jQuery对象
@@ -118,7 +299,7 @@ var	init = jQuery.fn.init = function( selector, context ) {
 
     // 如果selector是字符串
     if ( typeof selector === "string" ) {
-        //通过正则判断传入的选择器是HTML字符串还是ID
+        //如果参数是是字符串，则使用正则表达式检测selector是html还是#id
         if ( selector.charAt(0) === "<" && selector.charAt( selector.length - 1 ) === ">" && selector.length >= 3 ) {
             // Assume that strings that start and end with <> are HTML and skip the regex check
             match = [ null, selector, null ];
@@ -127,7 +308,7 @@ var	init = jQuery.fn.init = function( selector, context ) {
             match = rquickExpr.exec( selector );
         }
 
-        // 如果match[1]不为空或者context为空的时候
+        // 如果参数是html标签，则调用jQuery.parseHTML()来创建DOM
         if ( match && (match[1] || !context) ) {
 
             // 如果match[1] 不为空（即为html字符串）
@@ -160,7 +341,7 @@ var	init = jQuery.fn.init = function( selector, context ) {
                 return this;
 
             // HANDLE: $(#id)
-            // 如果context为空的时候，直接调用getElementById来选择元素 （即为id）
+            // 如果参数是#id，则调用document.getElementById()查找DOM
             } else {
                 elem = document.getElementById( match[2] );
 
@@ -184,17 +365,21 @@ var	init = jQuery.fn.init = function( selector, context ) {
             }
 
         // HANDLE: $(expr, $(...))
-        // 如果context为空 或者 context是一个jQuery对象，则直接调用context.find(selector)
+        // 如果选择器不是html元素和#id，而是表达式
         } else if ( !context || context.jquery ) {
+            //如果没有指定上下文，则使用rootjQuery查找
+            //如果指定了上下文，则使用context查找
             return ( context || rootjQuery ).find( selector );
 
         // HANDLE: $(expr, context)
         // (which is just equivalent to: $(context).find(expr)
         } else {
+            //如果指定了上下文，但上下文不是jQuery对象，则先创建一个包含context的jQuery对象，然后查找
             return this.constructor( context ).find( selector );
         }
 
     // HANDLE: $(DOMElement)
+    //如果选择器是DOM元素，即参数selector含有属性nodeType，则可认为selector是DOM元素，返回包含DOM元素的jQuery对象
     } else if ( selector.nodeType ) {
         this.context = this[0] = selector;
         this.length = 1;
@@ -210,12 +395,13 @@ var	init = jQuery.fn.init = function( selector, context ) {
             selector( jQuery );
     }
 
-     // 如果选择器是一个jQuery对象
+     // 如果参数是jQuery对象，如果参数含有selector属性，则是jQuery对象，将会复制它selector和context属性。
     if ( selector.selector !== undefined ) {
         this.selector = selector.selector;
         this.context = selector.context;
     }
 
+    //返回当前的jQuery对象
     return jQuery.makeArray( selector, this );
 };
 
@@ -226,7 +412,25 @@ init.prototype = jQuery.fn;
 rootjQuery = jQuery( document );
 ```
 
+###总结
+
+创建对象实例时，使用new 构造函数()，会返回这个构造函数的实例，但假若构造函数内部有返回值，这个new出来的实例就会被丢弃，最终使用构造函数内部返回的值作为new 构造函数()表达式的值。所以jQuery对象就是利用这一特性，因而，jQuery对象是jQuery.fn.init的实例。
+
+jQuery.fn.init.prototype 和 jQuery.fn 的引用指向同一个引用地址，所有方法或者属性挂载到jQuery.fn上，jQuery.fn加强了内部的封装，尽管jQuery对象的jQuery.prototype在外界被变更也不会在jQuery对象的正常运作产生影响，也就是说真正在内部起作用的是jQuery.fn，而jQuery.fn.init.prototype作为载体，再将属性和方法又挂载到刚开始定义的jQuery对象上，从而保护jQuery对象，不易受外界的应用影响。
+
+jQuery.fn.init生成jQuery对象的过程中，如果参数是字符串的处理过程：
+
+先使用正则表达式检测selector是html还是#id
+* 如果字符串是html标签，则调用jQuery.parseHTML()来创建DOM，在jQuery.parseHTML()内，使用document.createElement()创建DOM，如果是复杂的html标签，再调用jQuery.buildFragment()，利用浏览器的innerHTML机制创建DOM。
+* 如果字符串是#id，则调用document.getElementById()查找DOM。
+
+如果selector不是html元素和#id，而是表达式
+* 如果没有指定上下文，则使用rootjQuery查找
+* 如果指定了上下文，则使用context查找。
+* 如果指定了上下文，但上下文不是jQuery对象，则先创建一个包含context的jQuery对象，然后查找。
 
 
-http://www.360doc.com/content/13/1128/09/10504424_332741972.shtml
-http://nuysoft.iteye.com/blog/1190542
+
+
+
+
