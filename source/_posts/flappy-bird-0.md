@@ -51,9 +51,9 @@ CreateJS库EaselJS工具库，这个工具库可以用于 Sprites、动画、向
 
 现在思路清晰了，技术框架选好了，就一步步解决问题，筑巢吧。
 
-[demo查看 http://susubanana.github.io/flappybird.html](http://susubanana.github.io/flappybird.html)
+**demo查看**：[http://susubanana.github.io/flappybird.html](http://susubanana.github.io/flappybird.html)
 
-[源码查看 https://github.com/susubanana/FlappyBird](https://github.com/susubanana/FlappyBird)
+**项目地址**：[https://github.com/susubanana/FlappyBird](https://github.com/susubanana/FlappyBird)
 
 
 
