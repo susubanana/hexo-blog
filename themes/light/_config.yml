@@ -5,7 +5,7 @@ menu:
   nodejs: /nodejsdevelop
   项目: /mycase
   杂谈: /mylife
-  关于我: /aboutme
+  关于我: /aboutme.html
 
 widgets:
 - about_me
