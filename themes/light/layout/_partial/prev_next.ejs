@@ -1,9 +1,9 @@
 <div class="paging">
     <% if (page.prev){ %>
-    <span>上一篇：<a href="<%- config.root %><%- page.prev.path %>" class="prev" title="<%= page.prev.title %>"><%= page.prev.title %></a></span>
-    <% } %>
-    <% if (page.next){ %>
-    <span>下一篇：<a href="<%- config.root %><%- page.next.path %>" class="next" title="<%= page.next.title %>"><%= page.next.title %></a></span>
+    <dl class="page-prev"><dt>上一篇：</dt><dd><a href="<%- config.root %><%- page.prev.path %>" class="prev" title="<%= page.prev.title %>"><%= page.prev.title %></a></dd></dl>
     <% } %>
 
+    <% if (page.next){ %>
+    <dl><dt>下一篇：</dt><dd><a href="<%- config.root %><%- page.next.path %>" class="next" title="<%= page.next.title %>"><%= page.next.title %></a></dd></dl>
+    <% } %>
 </div>
